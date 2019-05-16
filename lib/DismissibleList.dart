@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:gridview_test/CustomDialog.dart';
 
 class DimissibleList extends StatefulWidget {
   @override
@@ -11,17 +10,12 @@ class _DimissibleListState extends State<DimissibleList> {
   int childSize = 3;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
         itemCount: childSize,
         itemBuilder: (context, index) {
-          if(index == 0){
+          if (index == 0) {
             return _buildNextPageAction(context);
           }
           return _buildDismissible();
@@ -30,10 +24,10 @@ class _DimissibleListState extends State<DimissibleList> {
     );
   }
 
-  Widget _buildNextPageAction(ctx) {
+  Widget _buildNextPageAction(context) {
     return FlatButton(
       child: Text("Go to a new page"),
-      onPressed: () => Navigator.of(ctx).pushNamed('/other'),
+      onPressed: () => Navigator.of(context).pushNamed('/other'),
     );
   }
 
@@ -53,11 +47,18 @@ class _DimissibleListState extends State<DimissibleList> {
         await Future.delayed(const Duration(milliseconds: 100), () {});
         return showDialog(
           context: context,
-          builder: (context) => CustomDialog(),
+          builder: (context) {
+            return Dialog(
+              child: FlatButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text("A button"),
+              ),
+            );
+          },
         );
       },
       resizeDuration: null,
-      onDismissed: (direction) => childSize--,
+      onDismissed: (direction) => setState(() => childSize--),
     );
   }
 }
