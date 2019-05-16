@@ -26,6 +26,7 @@ class _DimissibleListState extends State<DimissibleList> {
 
   Widget _buildNextPageAction(context) {
     return FlatButton(
+      color: Colors.blue,
       child: Text("Go to a new page"),
       onPressed: () => Navigator.of(context).pushNamed('/other'),
     );
@@ -51,7 +52,7 @@ class _DimissibleListState extends State<DimissibleList> {
             return Dialog(
               child: FlatButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text("A button"),
+                child: Text("Confirm dismiss"),
               ),
             );
           },
