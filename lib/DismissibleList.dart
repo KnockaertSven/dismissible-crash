@@ -8,13 +8,10 @@ class DimissibleList extends StatefulWidget {
 }
 
 class _DimissibleListState extends State<DimissibleList> {
-  List<Widget> children = [];
+  int childSize = 3;
 
   @override
   void initState() {
-    children.add(_buildNextPageAction(context));
-    children.add(_buildDismissible());
-    children.add(_buildDismissible());
     super.initState();
   }
 
@@ -22,16 +19,21 @@ class _DimissibleListState extends State<DimissibleList> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-        itemCount: children.length,
-        itemBuilder: (context, index) => children[index],
+        itemCount: childSize,
+        itemBuilder: (context, index) {
+          if(index == 0){
+            return _buildNextPageAction(context);
+          }
+          return _buildDismissible();
+        },
       ),
     );
   }
 
-  Widget _buildNextPageAction(context) {
+  Widget _buildNextPageAction(ctx) {
     return FlatButton(
       child: Text("Go to a new page"),
-      onPressed: () => Navigator.of(context).pushNamed('/other'),
+      onPressed: () => Navigator.of(ctx).pushNamed('/other'),
     );
   }
 
@@ -55,7 +57,7 @@ class _DimissibleListState extends State<DimissibleList> {
         );
       },
       resizeDuration: null,
-      onDismissed: (direction) => children.removeAt(1),
+      onDismissed: (direction) => childSize--,
     );
   }
 }
